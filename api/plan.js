@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
       return res.status(500).json({ error: 'Server is missing API key configuration.' });
     }
 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + apiKey;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' + apiKey;
 
     var response = await fetch(url, {
       method: 'POST',
