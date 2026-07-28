@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyMate - AI Study Planner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 StudyMate</h1>
+      <p>Your AI-powered study planner</p>
+    </header>
+
+    <section class="card">
+      <h2>Add a Subject / Topic</h2>
+      <form id="subjectForm">
+        <input type="text" id="subjectName" placeholder="Subject or topic name" required>
+        <input type="number" id="subjectHours" placeholder="Hours needed to study" min="1" required>
+        <select id="subjectPriority" required>
+          <option value="">Priority</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <button type="submit">Add Subject</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Your Subjects</h2>
+      <ul id="subjectList"></ul>
+      <p id="emptyMsg" class="muted">No subjects added yet.</p>
+    </section>
+
+    <section class="card">
+      <h2>Generate AI Study Plan</h2>
+      <label for="daysAvailable">How many days until your exam/deadline?</label>
+      <input type="number" id="daysAvailable" min="1" placeholder="e.g. 7">
+
+      <label for="hoursPerDay">How many hours can you study per day?</label>
+      <input type="number" id="hoursPerDay" min="1" placeholder="e.g. 4">
+
+      <button id="generateBtn">✨ Generate My Study Plan</button>
+      <div id="loadingMsg" class="hidden muted">Generating your plan...</div>
+    </section>
+
+    <section class="card" id="planSection" style="display:none;">
+      <h2>Your Personalized Study Plan</h2>
+      <div id="planOutput"></div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
