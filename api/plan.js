@@ -31,27 +31,26 @@ I have ${days} day(s) until my deadline/exam, and I can study ${hoursPerDay} hou
 Please generate my study plan.`;
 
   try {
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return res.status(500).json({ error: 'Server is missing API key configuration.' });
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        max_tokens: 800
-      })
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }]
+            }
+          ]
+        })
+      }
+    );
 
     const data = await response.json();
 
@@ -59,7 +58,7 @@ Please generate my study plan.`;
       return res.status(500).json({ error: data.error.message });
     }
 
-    const plan = data.choices[0].message.content;
+    const plan = data.candidates[0].content.parts[0].text;
     return res.status(200).json({ plan });
 
   } catch (err) {
